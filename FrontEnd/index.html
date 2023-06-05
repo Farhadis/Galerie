@@ -17,17 +17,18 @@
 	<link rel="stylesheet" href="https://fontawesome.com/icons/bag-shopping?f=classic&s=solid">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
+<!-- editor on top .......................................... -->
+
+<div id="editor" class="edition-top center hidden">
+	<i class="fa-solid fa-pen-to-square edite-top" ></i>
+	<span >Mode édition</span>
+	<button class="btn-pub">publier les changements</button>
+</div>
+<!-- ..................................................... -->
+
 
 <body>
 
-<!-- editor on top .......................................... -->
-
-	<div id="editor" class="edition-top center edite">
-		<i class="fa-solid fa-pen-to-square edite-top" ></i>
-		<span >Mode édition</span>
-		<button class="btn-pub">publier les changements</button>
-	</div>
-<!-- ..................................................... -->
 
 
 <header>
@@ -36,8 +37,8 @@
 		<ul>
 			<li id="projet-index" class="pointer">projets</li>
 			<li id="contact" class="pointer">contact</li>
-			<li><a href="login.html"> login</a></li>
-			<li id="logout" class="edite"><a href="index.html" > logout</a></li>
+			<li id="login2" ><a href="login.html"  > login</a></li>
+			<li id="logout" class="hidden"><a href="index.html" > logout</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -48,14 +49,14 @@
 		<figure >			
 			<img src="./assets/images/sophie-bluel.png" alt="">	
 			
-			<div  class=" editor-modal edite">
+			<div id="editor2"  class=" editor-modal hidden">
 				<div class="edite1 edite11" ><i  class=" i-edit1 fa-solid fa-pen-to-square"></i>modifier</div>
 			</div>
 		</figure>
 				
 		<article>
 			
-			<div  class=" editor-modal edite">
+			<div id="editor3" class=" editor-modal hidden">
 				<div class="edite1" ><i  class=" i-edit1 fa-solid fa-pen-to-square"></i>modifier</div>
 			</div>
 			
@@ -70,7 +71,7 @@
 
 		<div  class="center editor-modal">
 			<h2>Mes Projets</h2>
-			<div id="myBtn" class="edite my-btn"><i  class="fa-solid fa-pen-to-square"></i>modifier</div>
+			<div id="myBtn" class="hidden my-btn"><i  class="fa-solid fa-pen-to-square"></i>modifier</div>
 		</div>
 
 		<!-- ................Modal.............. -->
@@ -88,7 +89,7 @@
 
 				<hr>
 				<button class="btn-modal center"> Ajoutez une Photo</button>
-				<p id="sup" class="txt-center txt-sup">Supprimer la Galerie</p>	
+				<p id="supprimer" class="txt-center txt-sup">Supprimer la Galerie</p>	
 
 			</div>
 
@@ -118,8 +119,13 @@
 					
 						<label for="name">Titre</label>
 						<input type="text" name="titre" id="titre">
-						<label for="email">Ctegorie</label>
-						<input title="categorie" type="text" name="categorie" id="categorie">
+						<label for="categorieId" class="upload-label">Categorie</label>
+						<select class="upload-input-field" title="categorie" type="text" name="categorie" id="categorie">
+							<option value="0"></option>
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hotels & restaurants</option>
+						</select>
 					</form>
 
 					<hr id="hr">
