@@ -110,29 +110,43 @@ btnHotel.addEventListener("click", function(){
 
 
 // ////////////   LOGIN    //////////////////..................
+const btns = document.querySelector(".buttons");
+// const edite = document.getElementsByClassName("edite");
+const editeTop = document.getElementsByClassName("edition-top");
+const login2 = document.getElementById("login2");
+const editor = document.getElementById("editor");
+const editor2 = document.getElementById("editor2");
+const editor3 = document.getElementById("editor3");
+const btnLogout = document.querySelector("#logout");
+const btnEdite = document.getElementById("myBtn");
+console.log(token);
 
 function login() {
-    const btns = document.querySelector(".buttons");
-    const edite = document.querySelectorAll('.edite');
+    
+    if(token !== "" && token !== null){
+        btns.style.display = "none";
+        editor.classList.remove("hidden");
+        editor2.classList.remove("hidden");
+        editor3.classList.remove("hidden");
+        btnEdite.classList.remove("hidden");
+        btnLogout.classList.remove("hidden");
+        login2.style.display = "none";
+       
 
-    if(window.localStorage.getItem("token")){
-        // btns.style.display = "none";
-        // edite.style.display = "block";
     } else {
         btns.style.display = "flex";
-        edite.style.display = "none";
     }
+    
 }
 login();
 
 
 function logout() {
-    const btnLogout = document.querySelector("#logout");
     btnLogout.addEventListener("click", function () {
-        localStorage.removeItem("token");
-        login();
+        localStorage.removeItem("token")
     });
 };
+logout();
 
 
 
@@ -143,12 +157,14 @@ function logout() {
 
 var modal = document.getElementById("myModal");
 var modal2 = document.getElementById("myModal2");
-var btnEdite = document.getElementById("myBtn");
+// var btnEdite = document.getElementById("myBtn");
 var btnClose = document.getElementsByClassName("close")[0];
 var btnClose2 = document.getElementsByClassName("close2")[0];
 
 
-btnEdite.onclick = async function() {
+
+
+btnEdite.onclick = async function modal1() {
   modal.style.display = "block";
  
   const reponse = await fetch("http://localhost:5678/api/works");
@@ -156,7 +172,7 @@ btnEdite.onclick = async function() {
   console.log(works);
 
   document.querySelector("#photo").innerHTML = "";
-  for (let i=0; i < 11; i++){
+  for (let i=0; i < works.length; i++){
 
       const work = works[i];
       const photo = document.querySelector("#photo");
@@ -188,14 +204,20 @@ btnEdite.onclick = async function() {
       trash.addEventListener("click", (event) => {
         event.preventDefault();
         const token = window.localStorage.getItem("accessToken");
+        if (reponse.ok) {
+            alert("Ce projet vas etre supprimer !");          
+        } 
         supprimerWork(work.id);
-
-
-    });
-
+        
+    });  
+    showModal1();  
   };
+  
 }
-
+function showModal1(){
+    modal.style.display = "block";
+    
+}
 
 const backToModal =document.querySelector(".cursorPointer");
 backToModal.addEventListener("click", function() {
@@ -217,13 +239,14 @@ async function supprimerWork (workId) {
         });
         if (reponse.ok) {
             document.getElementById(workId).remove();
-            document.getElementById("project-work-" + workId).remove();
-            // modal.style.display = "block";
+            // document.getElementById("project-work-" + workId).remove();
+            modal.style.display = "block";
         }
     }
     catch (error) {
         console.error(error);
     }
+    
 }
 
 
@@ -300,22 +323,32 @@ async function addProjet() {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type':'multipart/form-data',
+                // 'Content-Type':'multipart/form-data',
                 'Authorization': `Bearer ${token}`
             },
             body: objetFormData()
         });
+        // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+       
+        // let fileSize = files[i].size;
+        // const maxFileSize = 4096 * 1024;
+        // if ((reponse.ok) && (fileSize > maxFileSize)) {
+        
         if (reponse.ok) {
-        alert("projet ajouté avec succès");
-    } else {
-        alert("envoi echoué");
-    }
+            alert("projet ajouté avec succès");
+           
+        } else {
+            alert("Veuillez bien remplir le formulaire");
+           
+        }
     } catch (error) {
         console.error(error);
         return null;
 
     }
-  }
+    // modal.style.display = "block";
+}
  
  
   //   Function pour valider un ajout 
@@ -327,6 +360,7 @@ function projetForm() {
 
         const formData = objetFormData();
         const reponse = await addProjet(formData);
+        
         console.log(reponse);
     });
 }
@@ -344,9 +378,9 @@ function preview(e) {
     } else {
         const preview = document.createElement("img");
         input.appendChild(preview);
-        preview.style.height = "180px";
-       
+        preview.style.height = "180px";       
         preview.style.marginLeft = "30%";
+       
 
         preview.src = URL.createObjectURL(e.target.files[0]);
      
@@ -365,7 +399,7 @@ function masquerElements() {
   
 
 
-  //   Pour Entrer d image et la prévisualisation
+  //   Pour Entrer l image et la prévisualisation
 function imageInput() {
     const btnAddImg = document.querySelector('#btn-add');
     const inputImage = document.querySelector('#file');
@@ -373,8 +407,7 @@ function imageInput() {
     btnAddImg.addEventListener('click', (e) => {
         e.preventDefault();
         masquerElements();
-        inputImage.click();
-        
+        inputImage.click();        
     });
   
     inputImage.addEventListener('change', (e) => {
@@ -384,5 +417,34 @@ function imageInput() {
     });
 }
 imageInput();
+
+
+
+  
+//........  SUPPRIMER  ?????????????????????????? ................
+
+// Fonction supprimer la gallery
+
+async function supprimerGalerie(){
+    works.forEach(async (work) => {
+        await fetch(`http://localhost:5678/api/works/${work.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+    });
+}
+
+// Listener supprimer tous les projets
+const gallery = document.querySelector(".gallery");
+const supprimerTous = document.querySelector("#supprimer");
+supprimerTous.addEventListener("click", function () {
+supprimerGalerie();
+works.length = 0;
+gallery.innerHTML = "";
+
+});
 
 
