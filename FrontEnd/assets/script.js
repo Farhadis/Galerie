@@ -135,6 +135,7 @@ function login() {
 
     } else {
         btns.style.display = "flex";
+        btnLogout.style.display = "none"; 
     }
     
 }
@@ -144,9 +145,12 @@ login();
 function logout() {
     btnLogout.addEventListener("click", function () {
         localStorage.removeItem("token")
+         
     });
+    
 };
 logout();
+
 
 
 
@@ -160,6 +164,9 @@ var modal2 = document.getElementById("myModal2");
 // var btnEdite = document.getElementById("myBtn");
 var btnClose = document.getElementsByClassName("close")[0];
 var btnClose2 = document.getElementsByClassName("close2")[0];
+
+// const titre = document.querySelector("#titre");
+// const categorie = document.querySelector("#categorie");
 
 
 
@@ -203,21 +210,18 @@ btnEdite.onclick = async function modal1() {
 
       trash.addEventListener("click", (event) => {
         event.preventDefault();
-        const token = window.localStorage.getItem("accessToken");
+        const token = window.localStorage.getItem("token");
         if (reponse.ok) {
-            alert("Ce projet vas etre supprimer !");          
+            alert("Ce projet va être supprimer !");          
         } 
         supprimerWork(work.id);
         
     });  
-    showModal1();  
+     
   };
   
 }
-function showModal1(){
-    modal.style.display = "block";
-    
-}
+
 
 const backToModal =document.querySelector(".cursorPointer");
 backToModal.addEventListener("click", function() {
@@ -322,47 +326,45 @@ async function addProjet() {
         const reponse = await fetch("http://localhost:5678/api/works", {
             method: "POST",
             headers: {
-                'Accept': 'application/json',
-                // 'Content-Type':'multipart/form-data',
+                'Accept': 'application/json',           
                 'Authorization': `Bearer ${token}`
             },
             body: objetFormData()
         });
-        // ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        
-       
-        // let fileSize = files[i].size;
-        // const maxFileSize = 4096 * 1024;
-        // if ((reponse.ok) && (fileSize > maxFileSize)) {
-        
-        if (reponse.ok) {
-            alert("projet ajouté avec succès");
-           
-        } else {
-            alert("Veuillez bien remplir le formulaire");
-           
-        }
+   
     } catch (error) {
         console.error(error);
-        return null;
+        alert("Veuillez  remplir bien le formulaire")
 
     }
-    // modal.style.display = "block";
+   
 }
  
  
-  //   Function pour valider un ajout 
+// Function pour valider un ajout 
+
 function projetForm() {
     const btnValider = document.querySelector("#btn-valider");
-  
     btnValider.addEventListener("click", async (e) => {
         e.preventDefault();
-
-        const formData = objetFormData();
-        const reponse = await addProjet(formData);
         
-        console.log(reponse);
+
+            if ((titre.value !== "") && (categorie.value !== "0")) {
+            alert("Ce projet est ajouté avec succès ")
+            // return true 
+            const formData = objetFormData();
+            const reponse = await addProjet(formData);
+            console.log(reponse);
+      
+        } else{ 
+            // document.querySelector("#error-txt-valider").innerHTML = "Veuillez  remplir bien le formulaire" 
+            alert("Veuillez  remplir bien le formulaire")
+              
+       
+        }
+        
     });
+  
 }
 projetForm(); 
 
@@ -389,17 +391,29 @@ function preview(e) {
 
 
 
-  //   Pour masquer
+//   Pour masquer
+
 function masquerElements() {
     const inputElements = document.querySelectorAll('.img-modal2 > *:not(img)');
     inputElements.forEach((element) => {
         element.style.display = 'none';
     });
-  }
+}
   
+function showElements() {
+    const inputElements = document.querySelectorAll('.img-modal2 > *:not(img)');
+    inputElements.forEach((element) => {
+        // if (element.tag !== 'i')
+            element.style.display = 'flex';
+        
+        
+    });
+}
 
 
-  //   Pour Entrer l image et la prévisualisation
+
+//   Pour Entrer l image et la prévisualisation
+
 function imageInput() {
     const btnAddImg = document.querySelector('#btn-add');
     const inputImage = document.querySelector('#file');
@@ -410,11 +424,25 @@ function imageInput() {
         inputImage.click();        
     });
   
+
+
     inputImage.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) {
-            preview(e);
+        const maxSize = 1024 * 1024;
+       
+        for (const file of e.target.files) {
+            if (file.size > maxSize ){
+            // document.querySelector("#error-txt-valider").innerHTML =`La taille du fichier : ${file.name}  est  ${file.size} bytes et il dépasse la limite maximale du 4mo.\n`
+            
+            alert( `La taille du fichier " ${file.name} "  est  environ " ${Math.round(file.size/1000000)} mo" , donc il dépasse la limite maximale du 4mo.\n`)
+            return showElements()
+          
+            } else if (e.target.files.length > 0) {
+
+            preview(e);       
         }
-    });
+
+    }});
+    
 }
 imageInput();
 
@@ -446,5 +474,3 @@ works.length = 0;
 gallery.innerHTML = "";
 
 });
-
-
