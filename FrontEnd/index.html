@@ -80,10 +80,12 @@
 
 			
 			<div class="modal-content">
-
-				<span class="close">&times;</span>
-				<p class="txt-center p-modal">Galerie Photo</p>
-				<div class="center">
+				<div class="p-modal">
+					<span class="close">&times;</span>
+					<p class="txt-center">Galerie Photo</p>
+				</div>
+				
+				<div class="center photo-modal over">
 					<div id="photo" class="photo-modal"></div>					
 				</div>
 
@@ -107,29 +109,34 @@
 					<p class="txt-center p-modal2">Ajout Photo</p>
 
 					<form class="form-modal2" action="" method="post">
-						<input  class="input-ajout" name="image"  id="file" type="file"  accept=".jpg, .jpeg, .png"  hidden="true">
+						<input  class="input-ajout" name="image"  id="file" type="file" data-max-size="1024"  accept=".jpg, .jpeg, .png"  hidden="true">
 
 													
 						<div class="img-modal2">								
 							<i class="fa-regular fa-image center" ></i>								
 							<button id="btn-add" class="center btn-ajout">+ Ajouter Photo</button>
-							<p class="txt-center">jpeg. png. : 4mo max</p>
+							<p class="txt-center max">jpeg. png. : 4mo max</p>
 						</div>
 						
 					
 						<label for="name">Titre</label>
 						<input type="text" name="titre" id="titre">
 						<label for="categorieId" class="upload-label">Categorie</label>
-						<select class="upload-input-field" title="categorie" type="text" name="categorie" id="categorie">
-							<option value="0"></option>
-							<option value="1">Objets</option>
-							<option value="2">Appartements</option>
-							<option value="3">Hotels & restaurants</option>
-						</select>
+						<div class="custom-select">
+							<select class="upload-input-field" title="categorie" type="text" name="categorie" id="categorie">
+								<option value="0"></option>
+								<option value="1">Objets</option>
+								<option value="2">Appartements</option>
+								<option value="3">Hotels & restaurants</option>
+							</select>
+
+						</div>
+						
 					</form>
 
 					<hr id="hr">
 					<button id="btn-valider" class="btn-modal2 center">Valider</button>
+					<p id="error-txt-valider"></p>
 				</div>
 			</div>			
 		</div>
