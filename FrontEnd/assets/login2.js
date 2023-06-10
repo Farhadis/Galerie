@@ -5,12 +5,8 @@ document.querySelector("#password").innerHTML = "";
 
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
-
-
-
-
 const envoyer = document.querySelector("#login-btn");
-
+const error = document.querySelector("#error-txt")
 
 envoyer.addEventListener("click", async function(event) {
 
@@ -24,22 +20,34 @@ envoyer.addEventListener("click", async function(event) {
         password: password.value,
       }),
     });
-
+    
     const connection = await reponse.json();
     if (reponse.ok) {
         window.localStorage.setItem("token", connection.token);
         document.location.href="./index.html";
         document.querySelector("#edite").style.display = "block";
-    } else if (reponse.status == "404"){
-        document.querySelector("#error-txt").innerHTML = "Addresse mail ou Mot  de  Passe   Incorrect !";
+    } else if((reponse.status == "404") || (reponse.status== "401")) {
+        document.querySelector("#error-txt").innerHTML = "Adresse mail ou Mot  de  Passe   Incorrect !";
        
         
-    } else if (reponse.status == "401"){
-        document.querySelector("#error-txt").innerHTML = "Addresse mail ou Mot  de  Passe   Incorrect !";
-        
-    }
+    } 
+   
 
 });
+
+
+
+
+
+email.onchange = function(){
+    
+    if (email.validity.valid) {
+        document.querySelector("#error-txt").innerHTML = "";        
+    }else {
+        document.querySelector("#error-txt").innerHTML = "Veuillez ajouter une Adresse mail correcte!";
+        
+    }
+}
 
 email.addEventListener("click", function(){
     document.querySelector("#error-txt").innerHTML = "";

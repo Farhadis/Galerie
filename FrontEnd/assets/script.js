@@ -161,17 +161,17 @@ logout();
 
 var modal = document.getElementById("myModal");
 var modal2 = document.getElementById("myModal2");
-// var btnEdite = document.getElementById("myBtn");
 var btnClose = document.getElementsByClassName("close")[0];
 var btnClose2 = document.getElementsByClassName("close2")[0];
 
-// const titre = document.querySelector("#titre");
-// const categorie = document.querySelector("#categorie");
 
 
 
 
-btnEdite.onclick = async function modal1() {
+
+btnEdite.onclick = function(){modal1()}  ;
+
+async function modal1(){
   modal.style.display = "block";
  
   const reponse = await fetch("http://localhost:5678/api/works");
@@ -189,7 +189,7 @@ btnEdite.onclick = async function modal1() {
 
       
       move.classList.add("fa-solid", "fa-up-down-left-right", "move");
-      move.style.visibility ="collapse";
+    //   move.style.visibility ="collapse";
       trash.classList.add("fa-solid", "fa-trash-can", "supprimer");
 
       const image = document.createElement("img");
@@ -206,21 +206,43 @@ btnEdite.onclick = async function modal1() {
       figure.appendChild(trash);
       figure.appendChild(image);
       figure.appendChild(figcaption);
+
+    
+
+      figure.addEventListener("mouseover", function(){
+        move.style.visibility = "visible";
+      })
+      
+      figure.addEventListener("mouseout", function(){
+        move.style.visibility = "collapse"
+      })
+
+
       
 
       trash.addEventListener("click", (event) => {
         event.preventDefault();
-        const token = window.localStorage.getItem("token");
-        if (reponse.ok) {
-            alert("Ce projet va être supprimer !");          
-        } 
-        supprimerWork(work.id);
-        
-    });  
-     
+            
+        if (confirm("Voullez-vous supprimer ce fichier?") == true){
+            supprimerWork(work.id) 
+            return modal1(event)
+            
+        }
+    }); 
+  
   };
   
 }
+// location.reload()
+function moveAct(){
+    const figure = document.createElement("figure");
+    figure.appendChild(move);
+    if(figure.file[i] == 0){
+        move.style.visibility = "visible";  
+    }
+}
+
+
 
 
 const backToModal =document.querySelector(".cursorPointer");
@@ -243,15 +265,15 @@ async function supprimerWork (workId) {
         });
         if (reponse.ok) {
             document.getElementById(workId).remove();
-            // document.getElementById("project-work-" + workId).remove();
-            modal.style.display = "block";
+            return location.reload(none)
         }
     }
     catch (error) {
         console.error(error);
     }
-    
+   
 }
+// modal1()
 
 
 
@@ -272,8 +294,7 @@ var btnClose2 = document.getElementsByClassName("close2")[0];
 
 ajoutPhoto.onclick = function(){
     modal.style.display = "none";
-    modal2.style.display = "block";
-    
+    modal2.style.display = "block";    
 }
 
 btnClose2.onclick = function() {
@@ -309,7 +330,6 @@ function objetFormData() {
   formData.append("category", categorie.value);
   formData.append("image", image.files[0]);
 
-
   return formData;
   
 }
@@ -331,47 +351,114 @@ async function addProjet() {
             },
             body: objetFormData()
         });
+         if (reponse.ok) {
+                      
+            document.querySelector("#error-txt-valider").innerHTML = "Ajouté !" ;
+                       
+        } else {
+            document.querySelector("#error-txt-valider").innerHTML = "Veuillez  ajouter une Photo" ;
+            supprimerMessage();
+            
+           
+        }
    
     } catch (error) {
         console.error(error);
         alert("Veuillez  remplir bien le formulaire")
 
+
     }
    
 }
- 
+
  
 // Function pour valider un ajout 
 
 function projetForm() {
+    const inputImage = document.querySelector('#file');
     const btnValider = document.querySelector("#btn-valider");
     btnValider.addEventListener("click", async (e) => {
         e.preventDefault();
         
-
-            if ((titre.value !== "") && (categorie.value !== "0")) {
-            alert("Ce projet est ajouté avec succès ")
-            // return true 
+            if ((titre.value !== "") && (categorie.value !== "0") && (inputImage.file !== "")) {
+    
+             
             const formData = objetFormData();
             const reponse = await addProjet(formData);
             console.log(reponse);
-      
+            supprimerMessage()
+            
+            
+           
         } else{ 
-            // document.querySelector("#error-txt-valider").innerHTML = "Veuillez  remplir bien le formulaire" 
-            alert("Veuillez  remplir bien le formulaire")
+            document.querySelector("#error-txt-valider").innerHTML = "Veuillez  remplir bien le formulaire" ;
+            supprimerMessage()
               
+        }   
        
-        }
-        
-    });
-  
+    });  
+    
 }
+
 projetForm(); 
+
+
+
+function imageInput() {
+    const btnAddImg = document.querySelector('#btn-add');
+    const inputImage = document.querySelector('#file');
+  
+    btnAddImg.addEventListener('click', (e) => {
+        e.preventDefault();
+        masquerElements();
+        inputImage.click();        
+    });
+
+    inputImage.addEventListener('change', (e) => {
+        const maxSize = 1024 * 1024;
+       
+        for (const file of e.target.files) {
+            if (file.size > maxSize ){
+            document.querySelector("#error-txt-valider").innerHTML =`La taille du fichier : ${file.name}  est  ${file.size} bytes et il dépasse la limite maximale du 4mo.\n`
+            supprimerMessage()
+             
+           
+            return showElements()
+            // } else if (e.target.files.length > 0) {
+            //     document.querySelector("#error-txt-valider").innerHTML = "Veuillez choisir un fichier"
+            } else {
+            preview(e);  
+                
+        }
+    }});   
+    
+}
+
+imageInput();
+
+
+// 
+function supprimerMessage(){
+    const image = document.getElementById("file")
+    const supMessage = document.querySelector("#error-txt-valider");   
+    const titre = document.getElementById("titre");
+    const categorie = document.getElementById("categorie");
+    titre.addEventListener("click", function(){
+        supMessage.style.display = "none";
+    } )
+    categorie.onchange = function(){
+        supMessage.style.display = "none";
+    }
+    image.onchange = function(){
+        supMessage.style.display = "none";
+    }
+};
 
 
 
 // Function pour creer une prévisualisation
 function preview(e) {
+
     const input = document.querySelector(".img-modal2");
     const imgPreview = input.querySelector("#file");
 
@@ -380,12 +467,10 @@ function preview(e) {
     } else {
         const preview = document.createElement("img");
         input.appendChild(preview);
-        preview.style.height = "180px";       
+        preview.style.height = "150px";       
         preview.style.marginLeft = "30%";
        
-
-        preview.src = URL.createObjectURL(e.target.files[0]);
-     
+        preview.src = URL.createObjectURL(e.target.files[0]);     
     }
 }
 
@@ -399,52 +484,27 @@ function masquerElements() {
         element.style.display = 'none';
     });
 }
-  
+
+
+
+// pour revenir vers Modal 2
+
 function showElements() {
     const inputElements = document.querySelectorAll('.img-modal2 > *:not(img)');
     inputElements.forEach((element) => {
-        // if (element.tag !== 'i')
-            element.style.display = 'flex';
-        
-        
+        if (element.tagName !== "P")
+        element.style.display = 'flex';        
     });
 }
 
+function showModal(){
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+}
 
 
 //   Pour Entrer l image et la prévisualisation
 
-function imageInput() {
-    const btnAddImg = document.querySelector('#btn-add');
-    const inputImage = document.querySelector('#file');
-  
-    btnAddImg.addEventListener('click', (e) => {
-        e.preventDefault();
-        masquerElements();
-        inputImage.click();        
-    });
-  
-
-
-    inputImage.addEventListener('change', (e) => {
-        const maxSize = 1024 * 1024;
-       
-        for (const file of e.target.files) {
-            if (file.size > maxSize ){
-            // document.querySelector("#error-txt-valider").innerHTML =`La taille du fichier : ${file.name}  est  ${file.size} bytes et il dépasse la limite maximale du 4mo.\n`
-            
-            alert( `La taille du fichier " ${file.name} "  est  environ " ${Math.round(file.size/1000000)} mo" , donc il dépasse la limite maximale du 4mo.\n`)
-            return showElements()
-          
-            } else if (e.target.files.length > 0) {
-
-            preview(e);       
-        }
-
-    }});
-    
-}
-imageInput();
 
 
 
@@ -465,12 +525,9 @@ async function supprimerGalerie(){
     });
 }
 
-// Listener supprimer tous les projets
-const gallery = document.querySelector(".gallery");
-const supprimerTous = document.querySelector("#supprimer");
-supprimerTous.addEventListener("click", function () {
-supprimerGalerie();
-works.length = 0;
-gallery.innerHTML = "";
 
-});
+
+
+
+
+
