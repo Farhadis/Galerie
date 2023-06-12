@@ -38,9 +38,8 @@ envoyer.addEventListener("click", async function(event) {
 
 
 
-
 email.onchange = function(){
-    
+    // var pattern = /[a-z0-9.-]{2,}@+[a-z0-9.-]{2,}/;
     if (email.validity.valid) {
         document.querySelector("#error-txt").innerHTML = "";        
     }else {

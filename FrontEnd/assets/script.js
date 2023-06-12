@@ -214,22 +214,35 @@ async function modal1(){
 	  if (i = i) {
             move.style.visibility = "collapse";
 	    } 
-    
+
+    //   figure.addEventListener("mouseover", function(){
+    //     move.style.visibility = "visible";
+    //   })
+      
+    //   figure.addEventListener("mouseout", function(){
+    //     move.style.visibility = "collapse"
+    //   })
+
+
+      
+
       trash.addEventListener("click", (event) => {
         event.preventDefault();
             
         if (confirm("Voullez-vous supprimer ce fichier?") == true){
             supprimerWork(work.id) 
-            return modal1(event)
             
         }
+        
     }); 
-  
+    
   };
   
 }
+// modal1() 
 
 
+// function moveIcon(){
 
 
 const backToModal =document.querySelector(".cursorPointer");
@@ -251,25 +264,49 @@ async function supprimerWork (workId) {
             },
         });
         if (reponse.ok) {
-            document.getElementById(workId).remove();
-            return location.reload(none)
+            // document.getElementById(workId).remove();
+            fetchWorks()                       
         }
     }
     catch (error) {
         console.error(error);
-    }
-   
+    }   
 }
-// modal1()
 
 
 
 
-// Fermer le  modal ...........................................
+
+// Fermer la  modal ...........................................
 btnClose.onclick = function() {
-  modal.style.display = "none";
+  modal.style.display = "none"; 
 }
 
+
+btnClose2.onclick = function() { 
+    location.reload();
+    modal.style.display = "none";
+    modal2.style.display = "none";   
+}
+
+// btnClose2.onclick = function() {  
+//     const efface = document.createElement("input");
+//     efface 
+//     efface.type = "reset";
+
+     // document.querySelector("#file").innerHTML = "";   
+    // titre.value = "";
+    // categorie.value[0] = 0;
+
+//     modal.style.display = "none";
+//     modal2.style.display = "none";   
+// }
+
+function effacerForm(){
+    image.innerHTML= "";
+    titre.value = "";
+    categorie[0] == 0;
+}
 
 
 var modal = document.getElementById("myModal");
@@ -281,12 +318,11 @@ var btnClose2 = document.getElementsByClassName("close2")[0];
 
 ajoutPhoto.onclick = function(){
     modal.style.display = "none";
-    modal2.style.display = "block";    
+    modal2.style.display = "block"; 
+    return effacerForm()   
 }
 
-btnClose2.onclick = function() {
-    modal2.style.display = "none";
-}
+
 
 
 
@@ -306,6 +342,11 @@ window.onclick = function(event) {
 
 
 // //   Creer un objet FormData
+
+const image = document.querySelector("#file");
+const titre = document.querySelector("#titre");
+const categorie = document.querySelector("#categorie");
+
 function objetFormData() {
   const image = document.querySelector("#file");
   const titre = document.querySelector("#titre");
@@ -317,13 +358,14 @@ function objetFormData() {
   formData.append("category", categorie.value);
   formData.append("image", image.files[0]);
 
-  return formData;
+
+  
+
+return formData;
   
 }
 
 
-
-// //  Ajout d un nouveau projet
 async function addProjet() {
     const token = localStorage.getItem("token");  
     console.log(token);
@@ -341,6 +383,8 @@ async function addProjet() {
          if (reponse.ok) {
                       
             document.querySelector("#error-txt-valider").innerHTML = "Ajouté !" ;
+            fetchWorks()
+
                        
         } else {
             document.querySelector("#error-txt-valider").innerHTML = "Veuillez  ajouter une Photo" ;
@@ -357,7 +401,8 @@ async function addProjet() {
     }
    
 }
-
+modal1()
+ 
  
 // Function pour valider un ajout 
 
@@ -368,15 +413,15 @@ function projetForm() {
         e.preventDefault();
         
             if ((titre.value !== "") && (categorie.value !== "0") && (inputImage.file !== "")) {
-            
-             
+                         
             const formData = objetFormData();
             const reponse = await addProjet(formData);
             console.log(reponse);
             supprimerMessage()
             
             
-           
+            
+                       
         } else{ 
             document.querySelector("#error-txt-valider").innerHTML = "Veuillez  remplir bien le formulaire" ;
             supprimerMessage()
@@ -403,8 +448,11 @@ function imageInput() {
         inputImage.click();        
     });
 
+ 
+
     inputImage.addEventListener('change', (e) => {
-        const maxSize = 1024 * 1024;
+        
+        const maxSize = 2*1024 * 1024;
        
         for (const file of e.target.files) {
             if (file.size > maxSize ){
@@ -427,7 +475,6 @@ imageInput();
 
 
 
-
 // 
 function supprimerMessage(){
     const image = document.getElementById("file")
@@ -446,6 +493,10 @@ function supprimerMessage(){
 };
 
 
+
+
+
+// Function pour creer une prévisualisation
 function preview(e) {
 
     const input = document.querySelector(".img-modal2");
@@ -491,12 +542,6 @@ function showModal(){
     modal.style.display = "block";
 }
 
-
-//   Pour Entrer l image et la prévisualisation
-
-
-
-
   
 //........  SUPPRIMER  ?????????????????????????? ................
 
@@ -524,6 +569,9 @@ function validateForm() {
   }
 
 
+  
+//   // Appeler la fonction pour afficher les éléments d'authentification
+//   displayElements();
 
 // .....   SELECT   ..................................................
 
@@ -540,11 +588,9 @@ for (i = 0; i < l; i++) {
   b = document.createElement("DIV");
   b.setAttribute("class", "select-items select-hide");
   for (j = 1; j < ll; j++) {
-
     c = document.createElement("DIV");
     c.innerHTML = selElmnt.options[j].innerHTML;
-    c.addEventListener("click", function(e) {
-
+    c.addEventListener("click", function(e) {        
         var y, i, k, s, h, sl, yl;
         s = this.parentNode.parentNode.getElementsByTagName("select")[0];
         sl = s.length;
