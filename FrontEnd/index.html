@@ -108,11 +108,11 @@
 						<span class="close2">&times;</span>
 					</div>
 					
-					<p class="txt-center p-modal2">Ajout Photo</p>
+					<p class="center p-modal2">Ajout Photo</p>
 
-					<form class="form-modal2" action="" method="post" >
-						<input  class="input-ajout" name="image"  id="file" type="file" data-max-size="1024"  accept=".jpg, .jpeg, .png"  hidden="true" >
-						
+					<form class="form-modal2" id="formulaire" action="" method="post" >
+						<input  class="input-ajout" name="image"  id="file" type="file" max-file-size="1024"  accept=".jpg, .jpeg, .png"  hidden="true" >
+						<img src="" id="previewImg" alt="">
 													
 						<div class="img-modal2 ">								
 							<i class="fa-regular fa-image " ></i>								
@@ -124,7 +124,8 @@
 						<label for="name">Titre</label>
 						<input type="text" name="titre" id="titre" required>
 						<label for="categorieId" class="upload-label">Categorie</label>
-						<div class="custom-select">
+						<div class="custom-select" >
+							
 							<!-- "upload-input-field" -->
 							<select  title="categorie" type="text" name="categorie" id="categorie" >
 								<option value="0"><i class="fa-solid fa-chevron-down"></i></option>
@@ -140,6 +141,7 @@
 					<hr id="hr">
 					<button id="btn-valider" class="btn-modal2 center">Valider</button>
 					<p id="error-txt-valider"></p>
+					<p id="ok-txt-valider" class="txt-center"></p>
 				</div>
 			</div>			
 		</div>
