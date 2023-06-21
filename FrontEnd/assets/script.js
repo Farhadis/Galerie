@@ -368,6 +368,7 @@ btnValider.addEventListener("click",async function(){
                 modal.style.display = "block";
                 modal1() 
             }, 1500);  
+            fetchWorks();
             
         } 
      
