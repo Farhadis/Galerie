@@ -26,27 +26,25 @@ envoyer.addEventListener("click", async function(event) {
         window.localStorage.setItem("token", connection.token);
         document.location.href="./index.html";
         document.querySelector("#edite").style.display = "block";
-    } else if((reponse.status == "404") || (reponse.status== "401")) {
-        document.querySelector("#error-txt").innerHTML = "Adresse mail ou Mot  de  Passe   Incorrect !";
-       
-        
     } 
-   
-
+    else if((reponse.status == "404") || (reponse.status== "401")) {
+        document.querySelector("#error-txt").innerHTML = "Adresse mail ou Mot  de  Passe   Incorrect !";        
+    } 
 });
 
 
 
 
+
+
 email.onchange = function(){
-    // var pattern = /[a-z0-9.-]{2,}@+[a-z0-9.-]{2,}/;
-    if (email.validity.valid) {
-        document.querySelector("#error-txt").innerHTML = "";        
-    }else {
-        document.querySelector("#error-txt").innerHTML = "Veuillez ajouter une Adresse mail correcte!";
-        
+   
+    if (email.validity = "none") {  
+        document.querySelector("#error-txt").innerHTML = "Veuillez ajouter une Adresse mail correcte!";        
     }
 }
+
+
 
 email.addEventListener("click", function(){
     document.querySelector("#error-txt").innerHTML = "";

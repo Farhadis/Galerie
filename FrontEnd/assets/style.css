@@ -402,8 +402,8 @@ a {
 	font-size: 60px; 
 	padding-top: 10px;
 	margin-bottom: 20px;
-	display: flex;
-	justify-content: center;
+	margin-left: 40%;
+	
 }
 
 hr{
@@ -567,17 +567,18 @@ hr{
 }
 
 .form-modal2 input {
-	width: 100%;
+	width: 97%;
+	padding-left: 10px;
 	height: 35px;
-	font-size: 1.2em;
+	font-size: 1em;
 	border: none;
-	
+	/* margin : 2em auto ; */
 	border-radius: 3px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 .form-modal2 select{
 	width: 100%;
-	height: 40px;
+	height: 35px;
 	font-size: 1.2em;
 	border: none;
 	border-radius: 3px;
@@ -595,6 +596,8 @@ hr{
 }
 
 .img-modal2{
+
+	justify-content: center;
 	width: 100%;
 	height: 150px;
 	background-color:rgb(222, 239, 242);
@@ -603,10 +606,16 @@ hr{
 
 .max{
 	font-size: smaller;
-	
+	display: block;
 }
 
+#ok-txt-valider{
+	color: rgb(9, 177, 9);
+}
 
+/* #titre{
+	padding-left: 10px;
+} */
 
 #error-txt-valider{
 	text-align: center;
@@ -632,7 +641,7 @@ hr{
 	color: crimson;
   }
   
- 
+  /* The Close Button */
   .close, .close2 {
 	color: #aaaaaa;
 	float: right;
@@ -714,20 +723,21 @@ hr{
 	padding: 0 10px;
 }
 
-/* .......................................................... */
+/* ..... select   ................................................... */
+
 .custom-select {
 	position: relative;
 	background-color: white;
 	
 	width: 100%;
-	height: 35px;
+	height: 38px;
 
 	border-radius: 3px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   }
   
   .custom-select select {
-	display: none; 
+	display: none; /*hide original SELECT element:*/
   }
   
   .select-selected {
@@ -749,20 +759,19 @@ hr{
 
   .select-selected.select-arrow-active:after {
 	border-color: transparent transparent #030303 transparent;
-	top: 10px;
+	top: 12px;
   }
   
 
   .select-items div,.select-selected {
 	color: #030303;
-	padding: 17px 16px;
-	border: 1px solid transparent;
-	border-color:  rgba(162, 162, 162, 0.1) ;
+	padding: 12px 16px;
+
 	cursor: pointer;
 	user-select: none;
   }
   
-
+  /*style items (options):*/
   .select-items {
 	position: absolute;
 	background-color: rgb(246, 242, 242);
@@ -781,3 +790,4 @@ hr{
 	background-color: rgba(0, 0, 0, 0.1);
   }
 
+/* ........................................................ */

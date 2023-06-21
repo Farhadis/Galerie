@@ -11,14 +11,6 @@ fetchWorks();
 
 
 
-async function fetchCat(){
-    const reponseCat = await fetch("http://localhost:5678/api/categories");
-    const cat = await reponseCat.json();
-
-}
-fetchCat();
-
-
 let i = 0;
 const token = localStorage.getItem("token");
 
@@ -241,8 +233,6 @@ async function supprimerWork (workId) {
         });
         if (reponse.ok) {
             modal1();
-            // document.getElementById(workId).remove();
-            // modal.style.display = "block";
             fetchWorks()            
         }
     }
@@ -274,12 +264,11 @@ function clearForm(){
     form.reset();
 
     const image = document.getElementById("previewImg");
-    image.src = "";
+    image.src = "";   
     
-   
-
-    const select = document.getElementById("categorie");
-    select.value = "0";
+    const category = document.getElementById("categorie");
+    category.selectedIndex = 0;
+    
 
     document.querySelector("#error-txt-valider").innerHTML = "" ; 
 
@@ -321,7 +310,7 @@ window.onclick = function(event) {
 const image = document.querySelector("#file");
 const titre = document.querySelector("#titre");
 const categorie = document.querySelector("#categorie");
-const valide = new Boolean(true);
+// const valide = new Boolean(true);
 
 
 function objetFormData() {
@@ -339,8 +328,18 @@ function validateForm2(){
     const image = document.querySelector('#file');
     const maxSize = 1*1024 * 1024;
     if((titre.value !== "") && (categorie.value !== "0") && (image.src !== "") && (file.size < maxSize) ) {
+        
        return true
 }};
+
+categorie.onchange = function(){
+    document.querySelector("#error-txt-valider").innerHTML = "" ;
+    }
+
+titre.onchange = function(){
+    document.querySelector("#error-txt-valider").innerHTML = "" ;
+    }
+
 
 
 const btnValider = document.querySelector("#btn-valider");
@@ -348,7 +347,7 @@ btnValider.addEventListener("click",async function(){
     
     validateForm2()
     if (reponse !== true){
-        document.querySelector("#error-txt-valider").innerHTML = "remplir bien le formulaire" ;
+        document.querySelector("#error-txt-valider").innerHTML = "Veuillez remplir bien le formulaire" ;
     }
     try {
         const reponse = await fetch("http://localhost:5678/api/works", {
@@ -362,7 +361,7 @@ btnValider.addEventListener("click",async function(){
         if (reponse.ok) {    
             document.querySelector("#error-txt-valider").innerHTML = "" ;
             document.querySelector("#ok-txt-valider").innerHTML =`Cette photo  est  bien ajoutée dans votre Galerie.\n` 
-             
+            console.log(categorie.value)
             
             setTimeout(function() {
                 modal2.style.display = "none";
@@ -371,7 +370,7 @@ btnValider.addEventListener("click",async function(){
             }, 1500);  
             
         } 
-   
+     
     } catch (error) {
         console.error(error);
         
@@ -382,34 +381,14 @@ btnValider.addEventListener("click",async function(){
 
 
 
-async function validateForm(){
-    try {
-        const reponse = await fetch("http://localhost:5678/api/works", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',           
-                'Authorization': `Bearer ${token}`
-            },
-            body: objetFormData()
-        });
-        if (reponse.ok) {    
-            document.querySelector("#error-txt-valider").innerHTML = "Ajouté !" ;        
-        } 
-       
-    } catch (error) {
-        console.error(error);
-        
-    }
-    }
-
-
-
 
 function imageInput() {
     const btnAddImg = document.querySelector('#btn-add');
+    // const image = document.querySelector('#file');
   
     btnAddImg.addEventListener('click', (e) => {
         e.preventDefault();
+        // masquerElements();
         image.click();              
     });
 
@@ -420,6 +399,14 @@ function imageInput() {
         for (const file of e.target.files) {
             if (file.size > maxSize ){
             document.querySelector("#error-txt-valider").innerHTML =`La taille du fichier "${file.name}"  est  environ "${Math.round(file.size/1000000)}mo" et il dépasse la limite maximale du 4mo.\n`
+            // supprimerMessage()
+                    
+            // return showElements()             
+            
+            // } else {
+            // masquerElements();
+            // preview(e); 
+         
 
                 
         } else{
@@ -429,9 +416,10 @@ function imageInput() {
             preview(e); 
         }
 }})};
-//    validateForm2();
+
 
 imageInput();
+
 
 
 
@@ -511,6 +499,11 @@ supprimerTous.addEventListener("click", function () {
 
 // .....   SELECT   ..................................................
 
+
+
+
+
+
 var x, j, l, ll, selElmnt, a, b, c;
 x = document.getElementsByClassName("custom-select");
 l = x.length;
@@ -577,4 +570,4 @@ function closeAllSelect(elmnt) {
   }
 };
 
-// document.addEventListener("click", closeAllSelect);
+document.addEventListener("click", closeAllSelect);
