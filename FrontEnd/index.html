@@ -82,13 +82,14 @@
 
 			
 			<div class="modal-content">
-				<div class="p-modal">
-					<span class="close">&times;</span>
+				<span class="close">&times;</span>
+				<div class="p-modal">			
 					<p class="txt-center">Galerie Photo</p>
 				</div>
 				
-				<div class="center photo-modal over">
-					<div id="photo" class="photo-modal"></div>					
+				<div class=" photo-modal">
+					<!-- class="photo-modal" -->
+					<div id="photo" class="photo-modaltest"></div>					
 				</div>
 
 				<hr>
@@ -102,12 +103,12 @@
 
 		<div id="myModal2" class="modal2">
 			<div class="modal-content2">
-				<div class="img-box">
-					<div class="top-modal2">
+				
+				<div class="top-modal2">						
 						<i class="fa-solid fa-arrow-left cursorPointer"></i>
 						<span class="close2">&times;</span>
-					</div>
-					
+				</div>
+				<div class="img-box">	
 					<p class="center p-modal2">Ajout Photo</p>
 
 					<form class="form-modal2" id="formulaire" action="" method="post" >
@@ -124,9 +125,8 @@
 						<label for="name">Titre</label>
 						<input type="text" name="titre" id="titre" required>
 						<label for="categorieId" class="upload-label">Categorie</label>
-						<div class="custom-select" >
-							
-							<!-- "upload-input-field" -->
+						<div>
+		
 							<select  title="categorie" type="text" name="categorie" id="categorie" >
 								<option value="0"><i class="fa-solid fa-chevron-down"></i></option>
 								<option value="1">Objets</option>
