@@ -291,6 +291,7 @@ a {
 
 .txt-center {
 	text-align: center;
+	font-size: 16px;
 	
 }
 
@@ -399,10 +400,9 @@ a {
 
 .img-modal2 i {
 	opacity: 10%; 
-	font-size: 60px; 
+	font-size: 40px; 
 	padding-top: 10px;
-	margin-bottom: 20px;
-	margin-left: 40%;
+	margin:0 40%;
 	
 }
 
@@ -417,35 +417,30 @@ hr{
 }
 
 
-
-
-
 .supprimer{
 	cursor: pointer;
 	color: #fdfdfd;
 	position: relative;
-	left: 40%;
-	top: 20px;
+	left: 35%;
+	top: 15px;
 	margin-bottom: -10px;
-	font-size: 10px;
+	font-size: 8px;
 	background-color: #000;
 	padding: 3px;
-	border-radius: 2px;
-	
+	border-radius: 2px;	
 }
 
 
 
 
-.move {
-	
+.move {	
 	cursor: pointer;
 	color: #fdfdfd;
 	position: relative;
 	left: 30%;
-	top: 20px;
+	top: 15px;
 	margin-bottom: -10px;
-	font-size: 10px;
+	font-size: 8px;
 	background-color: #000;
 	padding: 3px;
 	border-radius: 2px;
@@ -455,8 +450,9 @@ hr{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin: 10px auto;
+	width: 90%;
 }
-
 
 
 #editor span {
@@ -500,8 +496,7 @@ hr{
 	top: 0%;
 	width: 100%;
 	height: 100%; 
-	overflow: auto; 
-	
+	overflow: auto; 	
 	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
 
@@ -509,27 +504,31 @@ hr{
   .modal-content {
 	background-color: #fefefe;
 	margin: auto;
-	padding: 20px;
-	border: 5px solid #818181;
-	width: 35%;
-	height: 80%;
+
+	border: 3px solid #747474;
+	
+	max-width: 500px;
+	width: 30%;
+	height: auto;
   }
 
   .modal-content2 {
 	background-color: #fefefe;
 	margin: auto;
-	padding: 20px;
-	border: 5px solid #818181;
+
+	border: 1px solid #d9d9d9;
+	border-radius: 6px;
+	max-width: 500px;
 	width: 35%;
-	height: 80%;
+	height: 450px;
   }
 
 
-  .input-ajout {
-	/* width: 280px; */
+.input-ajout {
+	
 	height: 30px;
 	background-color: #091f2b04; 
-  }
+}
 
 
 
@@ -539,19 +538,19 @@ hr{
 	background-color: #cbddde;
 	position: relative;
 	font-family: 'Syne';
-	font-size: 12px;
+	font-size: 10px;
 	margin :10px auto 10px auto ;
 	width: auto;
-	height: 24px;
+	height: 28px;
 	text-align: center;
 	border: none;
 	border-radius: 60px ;
 	cursor: pointer;
 }
   .img-box {
-	margin-left: 10%;
-	width: 80%;
-	height: 120%;
+	margin: auto;
+	width: 65%;
+	height: auto;
 	display: flex;
 	flex-direction: column;
   }
@@ -576,14 +575,16 @@ hr{
 	border-radius: 3px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 .form-modal2 select{
 	width: 100%;
-	height: 35px;
-	font-size: 1.2em;
+	height: 37px;
+	font-size: 1em;
 	border: none;
 	border-radius: 3px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 
 
 /* ::::::::::::::::::::::::::::::::::::::::::::::::::::: */
@@ -599,13 +600,13 @@ hr{
 
 	justify-content: center;
 	width: 100%;
-	height: 150px;
+	height: 120px;
 	background-color:rgb(222, 239, 242);
 	
 }
 
 .max{
-	font-size: smaller;
+	font-size: 8px;
 	display: block;
 }
 
@@ -613,9 +614,7 @@ hr{
 	color: rgb(9, 177, 9);
 }
 
-/* #titre{
-	padding-left: 10px;
-} */
+
 
 #error-txt-valider{
 	text-align: center;
@@ -625,18 +624,22 @@ hr{
   .p-modal {
 	font-size: 	22px;
 	width: 70%;
-	margin: auto;
+	margin: 20px auto;
 	
   }
 
   .p-modal2 {
-	font-size: 	22px;
+	
 	margin-bottom: 20px;
+  }
+
+  .modal2 label{
+	font-size: 12px;
   }
 
   .txt-sup {
 	font-size: 	12px;
-	margin: 0px;
+	margin-bottom: 40px;
 	padding: 0;
 	color: crimson;
   }
@@ -645,7 +648,7 @@ hr{
   .close, .close2 {
 	color: #aaaaaa;
 	float: right;
-	font-size: 28px;
+	font-size: 18px;
 	font-weight: bold;
   }
   
@@ -689,10 +692,11 @@ hr{
 	background-color: #9e9e9e;
 	position: relative;
 	font-family: 'Syne';
-	font-weight: 700;
+	font-weight: 500;
+	font-size: 12px;
 	margin : 15px auto 10px auto ;
-	width: auto;
-	height: 30px;
+	width: 140px;
+	height: 22px;
 	text-align: center;
 	border: none;
 	border-radius: 60px ;
@@ -705,19 +709,41 @@ hr{
 
   .photo-modal {
 	
-	width: 90%;
+	width: 100%;
+	margin: 0 auto; 
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap; 
+
+	
+  }
+
+  .photo-modaltest{
+	width: 73%;
 	margin: auto;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	gap: 6px;	
+  }
+
+
+.modal img{
+	width: 50px;	
+}
+
+.modal figure{
+	width: 50px;
+	margin-top: 0%;
+	padding-top: 0%;
 	
-  }
+}
+
+.modal-content{
+	padding: 20px ;
+}
 
 
-  #photo figure{
-	width: 60px;
-	padding: 5px;
-  }
 
 .upload-input-field{
 	padding: 0 10px;
@@ -729,65 +755,10 @@ hr{
 	position: relative;
 	background-color: white;
 	
-	width: 100%;
+	width: 10%;
 	height: 38px;
 
 	border-radius: 3px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   }
   
-  .custom-select select {
-	display: none; /*hide original SELECT element:*/
-  }
-  
-  .select-selected {
-	
-	color: #030303;
-  }
-  
-
-.select-selected:after {
-	position: absolute;
-	font-family:'Font Awesome 6 Free' ;
-	content: "\f078";
-	font-weight: 700;
-	top: 12px;
-	right: 20px;
-	z-index: 99;
-  } 
-  
-
-  .select-selected.select-arrow-active:after {
-	border-color: transparent transparent #030303 transparent;
-	top: 12px;
-  }
-  
-
-  .select-items div,.select-selected {
-	color: #030303;
-	padding: 12px 16px;
-
-	cursor: pointer;
-	user-select: none;
-  }
-  
-  /*style items (options):*/
-  .select-items {
-	position: absolute;
-	background-color: rgb(246, 242, 242);
-	top: 100%;
-	left: 0;
-	right: 0;
-	z-index: 99;
-  }
-  
-  
-  .select-hide {
-	display: none;
-  }
-  
-  .select-items div:hover, .same-as-selected {
-	background-color: rgba(0, 0, 0, 0.1);
-  }
-
-/* ........................................................ */
