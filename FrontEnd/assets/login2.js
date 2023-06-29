@@ -23,7 +23,7 @@ envoyer.addEventListener("click", async function(event) {
     
     const connection = await reponse.json();
     if (reponse.ok) {
-        window.localStorage.setItem("token", connection.token);
+        window.sessionStorage.setItem("token", connection.token);
         document.location.href="./index.html";
         document.querySelector("#edite").style.display = "block";
  

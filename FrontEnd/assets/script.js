@@ -1,5 +1,5 @@
 
-
+//pour recuperer la galerie (works)
 async function fetchWorks(){
     const reponse = await fetch("http://localhost:5678/api/works");
     const works = await reponse.json();
@@ -11,24 +11,18 @@ fetchWorks();
 
 
 
-async function fetchCat(){
-    const reponseCat = await fetch("http://localhost:5678/api/categories");
-    const cat = await reponseCat.json();
-
-}
-fetchCat();
 
 
-let i = 0;
-const token = localStorage.getItem("token");
+
+// pour creer la galerie dans la page d'accuil
 
 function generer(works) {
 
-    document.querySelector(".gallery").innerHTML = "";
+    document.querySelector(".galerie").innerHTML = "";
     for (let i=0; i < works.length; i++){
 
         const work = works[i];
-        const gallery = document.querySelector(".gallery");
+        const galerie = document.querySelector(".galerie");
         const figure = document.createElement("figure");
 
         const image = document.createElement("img");
@@ -38,7 +32,7 @@ function generer(works) {
         const figcaption = document.createElement("figcaption");
         figcaption.textContent = work.title;
 
-        gallery.appendChild(figure);
+        galerie.appendChild(figure);
         figure.appendChild(image);
         figure.appendChild(figcaption);
     };    
@@ -50,16 +44,16 @@ function generer(works) {
 
 const reponse = await fetch("http://localhost:5678/api/works");
 const works = await reponse.json();
-console.log(works);
+
 
 // FILTER TOUS ,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 const btnTous = document.querySelector(".btn-tous");
 
 btnTous.addEventListener("click", function(){
-    const catTous = works;
+
     generer(works);
-    console.log(catTous)
+   
 })
 
 
@@ -73,9 +67,9 @@ btnObjet.addEventListener("click", function(){
         return work.category.name === "Objets";
     });
 
-    document.querySelector(".gallery").innerHTML = "";
+    document.querySelector(".galerie").innerHTML = "";
     generer(catObjet);
-    console.log(catObjet);
+    
 });
 
 
@@ -88,9 +82,9 @@ btnAppart.addEventListener("click", function() {
         return work.categoryId === 2;
     });
 
-    document.querySelector(".gallery").innerHTML = "";
+    document.querySelector(".galerie").innerHTML = "";
     generer(catAppart);
-    console.log(catAppart);
+   
 });
 
 
@@ -103,27 +97,30 @@ btnHotel.addEventListener("click", function(){
         return work.categoryId === 3;
     });
 
-    document.querySelector(".gallery").innerHTML = "";
+    document.querySelector(".galerie").innerHTML = "";
     generer(catHotel);
-    console.log(catHotel);
+   
 });
 
 
 
 // ////////////   LOGIN    //////////////////..................
+
+const token = sessionStorage.getItem("token");
 const btns = document.querySelector(".buttons");
-// const edite = document.getElementsByClassName("edite");
 const editeTop = document.getElementsByClassName("edition-top");
 const login2 = document.getElementById("login2");
 const editor = document.getElementById("editor");
 const editor2 = document.getElementById("editor2");
 const editor3 = document.getElementById("editor3");
 const btnLogout = document.querySelector("#logout");
-const btnEdite = document.getElementById("myBtn");
-console.log(token);
+const btnEdite = document.getElementById("modifierBtn");
 
-function login() {
-    
+
+
+// pour preparer la page d'accuil version edition apres login
+
+function login() {    
     if(token !== "" && token !== null){
         btns.style.display = "none";
         editor.classList.remove("hidden");
@@ -143,9 +140,11 @@ function login() {
 login();
 
 
+// pour logout - deconnection
+
 function logout() {
     btnLogout.addEventListener("click", function () {
-        localStorage.removeItem("token")
+        sessionStorage.removeItem("token")
          
     });    
 };
@@ -157,22 +156,23 @@ logout();
 
 
 
-//  MODAL /////////////////////////////////////////////
+//  MODAL 1    /////////////////////////////////////////////
 
-var modal = document.getElementById("myModal");
-var modal2 = document.getElementById("myModal2");
-// var btnEdite = document.getElementById("myBtn");
-var btnClose = document.getElementsByClassName("close")[0];
-var btnClose2 = document.getElementsByClassName("close2")[0];
+var modal = document.getElementById("modal");
+var modal2 = document.getElementById("modal2");
+var btnFermer1 = document.getElementsByClassName("fermer-modal1")[0];
+var btnFermer2 = document.getElementsByClassName("fermer-modal2")[0];
 
 btnEdite.onclick = function(){modal1()}  ;
 
+
+// pour creer modal 1 
 async function modal1(){
   modal.style.display = "block";
  
   const reponse = await fetch("http://localhost:5678/api/works");
   const works = await reponse.json();
-  console.log(works);
+ 
 
   document.querySelector("#photo").innerHTML = "";
   for (let i=0; i < works.length; i++){
@@ -184,14 +184,13 @@ async function modal1(){
       const move = document.createElement("i");
       
       move.classList.add("fa-solid", "fa-up-down-left-right", "move");
-    //   move.style.visibility ="collapse";
+    
       trash.classList.add("fa-solid", "fa-trash-can", "supprimer");
 
       const image = document.createElement("img");
       image.src = work.imageUrl;
       image.alt = work.title;
-    //   image.style.width = "50px";
- //   figure.style.width = "50px";
+  
       const figcaption = document.createElement("figcaption");
       figcaption.textContent = "éditer";
       figcaption.style.fontSize = "10px";
@@ -217,15 +216,14 @@ async function modal1(){
   };
 }
 
-// modal1() 
 
-
-
+// pour revenir vers la modal 1
 const backToModal =document.querySelector(".cursorPointer");
 backToModal.addEventListener("click", function() {
     modal2.style.display = "none";
     modal.style.display = "block";
 })
+
 
 
 //  supprimer une image............................
@@ -253,19 +251,23 @@ async function supprimerWork (workId) {
 
 
 
-// Fermer la  modal ...........................................
-btnClose.onclick = function() {
+// Fermer la  modal 1 ...........................................
+btnFermer1.onclick = function() {
   modal.style.display = "none"; 
 }
 
-
-btnClose2.onclick = function() { 
+// Fermer les  modals ...........................................
+btnFermer2.onclick = function() { 
     clearForm();
     // location.reload();
     modal.style.display = "none";
     modal2.style.display = "none";  
    
 }
+
+
+
+// POUR SUPPRIMER LES contenues du formulair
 
 function clearForm(){
     const form = document.getElementById("formulaire");
@@ -282,14 +284,14 @@ function clearForm(){
 
     document.querySelector("#ok-txt-valider").innerHTML = "";
 
-    showElements();
+    imgElements();
 }
 
-var modal = document.getElementById("myModal");
-var modal2 = document.querySelector("#myModal2");
+
+
 var ajoutPhoto = document.querySelector(".btn-modal");
-var btn2 = document.getElementById("myBtn2");
-var btnClose2 = document.getElementsByClassName("close2")[0];
+var btn2 = document.getElementById("modifierBtn2");
+
 
 ajoutPhoto.onclick = function(){
     clearForm();
@@ -297,6 +299,9 @@ ajoutPhoto.onclick = function(){
     modal2.style.display = "block"; 
      
 }
+
+
+// pour sortir des modals 
 
 window.onclick = function(event) {
     if (event.target == modal2) {
@@ -321,6 +326,8 @@ const categorie = document.querySelector("#categorie");
 
 
 
+// creer un objet FormData
+
 function objetFormData() {
   const formData = new FormData();  
   formData.append("title", titre.value);
@@ -329,6 +336,9 @@ function objetFormData() {
 
 return formData; 
 }
+
+
+// pour valider le formulaire de la modal 2
 
 function validateForm2(){
     document.querySelector("#error-txt-valider").innerHTML = "" ;
@@ -340,6 +350,9 @@ function validateForm2(){
        return true
 }};
 
+
+// pour effacer les messages
+
 categorie.onchange = function(){
     document.querySelector("#error-txt-valider").innerHTML = "" ;
     }
@@ -349,13 +362,18 @@ titre.onchange = function(){
     }
 
 
+
+
+// pour  valider le formulaire d'ajout d'un projet
 const btnValider = document.querySelector("#btn-valider");
+
 btnValider.addEventListener("click",async function(){
     
     validateForm2()
     if (reponse !== true){
         document.querySelector("#error-txt-valider").innerHTML = "Veuillez remplir bien le formulaire" ;
     }
+
     try {
         const reponse = await fetch("http://localhost:5678/api/works", {
             method: "POST",
@@ -368,16 +386,17 @@ btnValider.addEventListener("click",async function(){
         if (reponse.ok) {    
             document.querySelector("#error-txt-valider").innerHTML = "" ;
             document.querySelector("#ok-txt-valider").innerHTML =`Cette photo  est  bien ajoutée dans votre Galerie.\n` 
-            console.log(categorie.value)
+           
             
             setTimeout(function() {
                 modal2.style.display = "none";
                 modal.style.display = "block";
                 modal1() 
-            }, 1500);  
+            }, 1500); 
+
             fetchWorks()
         } 
-
+    
     } catch (error) {
         console.error(error);
         
@@ -387,13 +406,14 @@ btnValider.addEventListener("click",async function(){
 
 
 
+// pour ajouter une image
+
 function imageInput() {
     const btnAddImg = document.querySelector('#btn-add');
     const image = document.querySelector('#file');
   
     btnAddImg.addEventListener('click', (e) => {
         e.preventDefault();
-        // masquerElements();
         image.click();              
     });
 
@@ -403,17 +423,16 @@ function imageInput() {
        
         for (const file of e.target.files) {
             if (file.size > maxSize ){
-            document.querySelector("#error-txt-valider").innerHTML =`La taille du fichier "${file.name}"  est  environ "${Math.round(file.size/1000000)}mo" et il dépasse la limite maximale du 4mo.\n`           
-
-                
+            document.querySelector("#error-txt-valider").innerHTML =`La taille du fichier "${file.name}"  est  environ "${Math.round(file.size/1000000)}mo" et il dépasse la limite maximale du 4mo.\n`
+        
+               
         } else{
             document.querySelector("#error-txt-valider").innerHTML =""
-            // supprimerMessage()
             masquerElements();
             preview(e); 
         }
 }})};
-//    validateForm2();
+
 
 imageInput();
 
@@ -434,14 +453,14 @@ function preview(e) {
         const preview = document.getElementById("previewImg");
         input.appendChild(preview);
         preview.style.height = "120px";       
-        preview.style.marginLeft = "40%";
+        preview.style.marginLeft = "35%";
         preview.src = URL.createObjectURL(e.target.files[0]);     
     }
 }
 
 
 
-//   Pour masquer
+//   Pour masquer img-box
 
 function masquerElements() {
     const inputElements = document.querySelectorAll('.img-modal2 > *:not(img)');
@@ -450,24 +469,23 @@ function masquerElements() {
     });
 }
 
-function showElements() {
+function imgElements() {
     const inputElements = document.querySelectorAll('.img-modal2 > *:not(img)');
     inputElements.forEach((element) => {
         element.style.display = 'block';        
     });
 }
 
-
-function showModal(){
-    var modal = document.getElementById("myModal");
+function versModal(){
+    var modal = document.getElementById("modal");
     modal.style.display = "block";
     modal2.style.display = "none";
 }
 
   
-//........  SUPPRIMER  ?????????????????????????? ................
+//........  SUPPRIMER   ................
 
-// Fonction supprimer la gallery
+// Fonction pour  supprimer la galerie
 
 async function supprimerGalerie(){
     works.forEach(async (work) => {
@@ -482,14 +500,15 @@ async function supprimerGalerie(){
 }
 
 
-const gallery = document.querySelector(".gallery");
+const galerie = document.querySelector(".galerie");
 const supprimerTous = document.querySelector("#supprimer");
 supprimerTous.addEventListener("click", function () {
     confirm("Voullez-vous supprimer la Galerie?")
     supprimerGalerie();
-    works.length = 0;
-    gallery.innerHTML = "";
+    // works.length = 0;
+    // galerie.innerHTML = "";
 
 });
 
   
+

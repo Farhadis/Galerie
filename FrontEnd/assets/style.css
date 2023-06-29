@@ -144,7 +144,7 @@ li:hover {
 	text-align: center;
 	
 }
-.gallery {
+.galerie {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
@@ -152,7 +152,7 @@ li:hover {
 	grid-row-gap: 20px;
 }
 
-.gallery img {
+.galerie img {
 	width: 100%;
 
 }
@@ -384,7 +384,7 @@ a {
 	margin-right: 10px;
 }
 
-.my-btn{
+.mon-btn{
 	border: none; 
 	cursor: pointer; 
 	font-size: 14px;
@@ -393,7 +393,7 @@ a {
 	color: black;
 }
 
-.my-btn i {
+.mon-btn i {
 	margin-right: 10px; 
 	color: black;
 }
@@ -504,7 +504,7 @@ hr{
   .modal-content {
 	background-color: #fefefe;
 	margin: auto;
-
+	/* padding: 20px; */
 	border: 3px solid #747474;
 	
 	max-width: 500px;
@@ -515,7 +515,7 @@ hr{
   .modal-content2 {
 	background-color: #fefefe;
 	margin: auto;
-
+	/* padding: 20px; */
 	border: 1px solid #d9d9d9;
 	border-radius: 6px;
 	max-width: 500px;
@@ -525,7 +525,7 @@ hr{
 
 
 .input-ajout {
-	
+	/* width: 280px; */
 	height: 30px;
 	background-color: #091f2b04; 
 }
@@ -612,9 +612,12 @@ hr{
 
 #ok-txt-valider{
 	color: rgb(9, 177, 9);
+	font-size: small;
 }
 
-
+/* #titre{
+	padding-left: 10px;
+} */
 
 #error-txt-valider{
 	text-align: center;
@@ -644,17 +647,18 @@ hr{
 	color: crimson;
   }
   
-  /* The Close Button */
-  .close, .close2 {
+  /*  Button pour fermer les modals */
+
+  .fermer-modal1, .fermer-modal2 {
 	color: #aaaaaa;
 	float: right;
 	font-size: 18px;
 	font-weight: bold;
   }
   
-  .close:hover,
-  .close:focus,  .close2:hover,
-  .close2:focus {
+  .fermer-modal1:hover,
+  .fermer-modal1:focus,  .fermer-modal2:hover,
+  .fermer-modal2:focus {
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
@@ -727,6 +731,10 @@ hr{
 	gap: 6px;	
   }
 
+  /* #photo figure{
+	width: 60px;
+	padding: 5px;
+  } */
 
 .modal img{
 	width: 50px;	
